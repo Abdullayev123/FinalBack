@@ -5,7 +5,7 @@ const allCarsSchema = new Schema({
   modelName: { type: String, required: true },
   modelLogo: { type: String, required: true },
   year: { type: String, required: true },
-  price: { type: Number, required: true },
+  price: { type: String, required: true },
   description: { type: String, required: true },
   modelImage: [{ type: String, required: true }],
   modelInterior: [{ type: String, required: true }],

@@ -18,6 +18,15 @@ export const getByid = async (req, res) => {
     res.send(error);
   }
 };
+export const deleteHome = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await HomeModel.findByIdAndDelete(id);
+    res.send("Deleted");
+  } catch (error) {
+    res.send(error);
+  }
+};
 export const addHome = async (req, res) => {
   try {
     const { brand, image } = req.body;

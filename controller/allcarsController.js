@@ -74,19 +74,28 @@ export const addCars = async (req, res) => {
         .json({ error: "Invalid input. Expected an array of objects." });
     }
 
-    // Her bir elemanın geçerli bir araba objesi olup olmadığını kontrol et
-    // for (const car of carsArray) {
-    //   if (!car.brand || !car.model || !car.year) {
-    //     return res
-    //       .status(400)
-    //       .json({ error: "Invalid car object in the array" });
-    //   }
-    // }
-
     const insertedCars = await AllCarsModel.insertMany(carsArray);
     res
       .status(201)
       .json({ message: "Cars added successfully", data: insertedCars });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
+  }
+};
+
+export const updateCars = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedCar = req.body;
+    const car = await AllCarsModel.findByIdAndUpdate(id, updatedCar, {
+      new: true,
+    });
+    if (!car) {
+      return res.status(404).json({ error: "Car not found" });
+    }
+    res.json(car);
   } catch (error) {
     res
       .status(500)
